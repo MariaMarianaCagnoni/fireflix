@@ -1,6 +1,7 @@
 package dev.mariamariana.admin.catalogo.domain.category;
 
 import dev.mariamariana.admin.catalogo.domain.AggregateRoot;
+import dev.mariamariana.admin.catalogo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -33,6 +34,11 @@ public class Category extends AggregateRoot<CategoryID> {
         this.deletedAt = aDeleteDate;
     }
 
+
+    @Override
+    public void validate(final ValidationHandler handler) {
+ new CategoryValidator(this, handler).validate();
+    }
 
     public CategoryID getId() {
         return id;
