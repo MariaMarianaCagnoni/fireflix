@@ -34,10 +34,9 @@ public class Category extends AggregateRoot<CategoryID> {
         this.deletedAt = aDeleteDate;
     }
 
-
     @Override
     public void validate(final ValidationHandler handler) {
- new CategoryValidator(this, handler).validate();
+        new CategoryValidator(this, handler).validate();
     }
 
     public CategoryID getId() {
@@ -73,7 +72,8 @@ public class Category extends AggregateRoot<CategoryID> {
     public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
         final var id = CategoryID.unique();
         final var now = Instant.now();
-        return new Category(id, aName, aDescription, isActive, now, now, null);
+        final var deletedAt = isActive ? null : now;
+        return new Category(id, aName, aDescription, isActive, now, now, deletedAt);
 
     }
 }
